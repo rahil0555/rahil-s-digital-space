@@ -1,98 +1,161 @@
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Sparkles } from "lucide-react";
 
-const projects = [
+type ProjectStatus = "live" | "progress" | "concept";
+
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  status: ProjectStatus;
+  statusLabel: string;
+  github?: string;
+  demo?: string;
+  featured?: boolean;
+}
+
+const projects: Project[] = [
   {
-    title: "Smart Home Automation",
-    description: "IoT-based home automation system with voice control and mobile app integration. Controls lights, fans, and appliances remotely.",
-    tech: ["ESP32", "React Native", "Firebase", "MQTT"],
-    github: "#",
-    demo: "#",
+    title: "AI Tutor Platform",
+    description: "An intelligent tutoring system that adapts to each student's learning style. Uses AI to provide personalized lessons, instant feedback, and progress tracking.",
+    tech: ["React", "Python", "OpenAI", "PostgreSQL"],
+    status: "progress",
+    statusLabel: "In Development",
+    featured: true,
   },
   {
-    title: "AI Document Analyzer",
-    description: "ML-powered document processing tool that extracts, summarizes, and categorizes information from PDFs and images.",
-    tech: ["Python", "OpenCV", "TensorFlow", "FastAPI"],
+    title: "EdTech SaaS Dashboard",
+    description: "Analytics and management platform for educational institutions. Real-time insights, student performance tracking, and AI-powered recommendations.",
+    tech: ["Next.js", "TypeScript", "Tailwind", "Supabase"],
+    status: "progress",
+    statusLabel: "Building",
     github: "#",
-    demo: "#",
   },
   {
-    title: "E-Commerce Platform",
-    description: "Full-stack e-commerce solution with payment integration, inventory management, and real-time analytics dashboard.",
-    tech: ["React", "Node.js", "PostgreSQL", "Stripe"],
-    github: "#",
-    demo: "#",
+    title: "Smart Study Companion",
+    description: "Mobile-first app that uses spaced repetition and AI to optimize study sessions. Tracks learning patterns and suggests optimal review times.",
+    tech: ["React Native", "FastAPI", "Redis", "ML"],
+    status: "concept",
+    statusLabel: "Concept",
   },
   {
-    title: "Embedded Weather Station",
-    description: "Custom PCB weather monitoring system with multiple sensors, OLED display, and cloud data logging capabilities.",
-    tech: ["STM32", "KiCad", "C++", "ThingSpeak"],
+    title: "Portfolio Systems",
+    description: "Modern, responsive portfolio templates built for developers and creators. Clean design, fast loading, and easy customization.",
+    tech: ["React", "Tailwind CSS", "Framer Motion"],
+    status: "live",
+    statusLabel: "Live",
+    demo: "#",
     github: "#",
-    demo: null,
   },
   {
-    title: "Portfolio Generator",
-    description: "CLI tool that generates beautiful portfolio websites from a simple YAML configuration file.",
-    tech: ["Python", "Jinja2", "Tailwind CSS", "GitHub Actions"],
-    github: "#",
-    demo: "#",
+    title: "Prompt Engineering Toolkit",
+    description: "Collection of tools and templates for crafting effective AI prompts. Includes testing playground and optimization suggestions.",
+    tech: ["TypeScript", "OpenAI", "Node.js"],
+    status: "concept",
+    statusLabel: "Exploring",
   },
   {
-    title: "Real-time Chat App",
-    description: "Scalable chat application with end-to-end encryption, file sharing, and group messaging features.",
-    tech: ["React", "Socket.io", "Redis", "MongoDB"],
-    github: "#",
-    demo: "#",
+    title: "Learning Path Generator",
+    description: "AI-powered tool that creates personalized learning roadmaps based on goals, current skills, and available time.",
+    tech: ["Python", "LangChain", "React", "FastAPI"],
+    status: "concept",
+    statusLabel: "Concept",
   },
 ];
 
+const getStatusStyles = (status: ProjectStatus) => {
+  switch (status) {
+    case "live":
+      return "status-badge live";
+    case "progress":
+      return "status-badge progress";
+    case "concept":
+      return "status-badge concept";
+  }
+};
+
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 px-6 bg-secondary/30">
-      <div className="container mx-auto max-w-6xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Featured <span className="text-gradient">Projects</span>
-        </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          A selection of projects I've built, ranging from embedded systems to full-stack applications.
-        </p>
+    <section id="projects" className="relative py-24 px-6">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/30 to-transparent" />
+      
+      <div className="container mx-auto max-w-6xl relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Building AI-powered products and experiments. From education platforms to developer tools.
+          </p>
+        </div>
+        
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <div
               key={project.title}
-              className="card-gradient border border-border rounded-xl p-6 hover:border-primary/50 transition-colors group"
+              className={`group card-gradient border border-border rounded-2xl p-6 hover-lift ${
+                project.featured ? "md:col-span-2 lg:col-span-1" : ""
+              }`}
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <h3 className="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+              {/* Header */}
+              <div className="flex items-start justify-between mb-4">
+                <div className={getStatusStyles(project.status)}>
+                  {project.status === "live" && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />}
+                  {project.statusLabel}
+                </div>
+                {project.featured && (
+                  <div className="flex items-center gap-1 text-xs text-primary">
+                    <Sparkles size={12} />
+                    Featured
+                  </div>
+                )}
+              </div>
+              
+              {/* Content */}
+              <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-gradient transition-all">
                 {project.title}
               </h3>
-              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
                 {project.description}
               </p>
+              
+              {/* Tech Stack */}
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.tech.map((t) => (
                   <span
                     key={t}
-                    className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-full"
+                    className="text-xs bg-secondary text-muted-foreground px-3 py-1.5 rounded-lg"
                   >
                     {t}
                   </span>
                 ))}
               </div>
-              <div className="flex gap-3">
-                <a
-                  href={project.github}
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <Github size={16} />
-                  Code
-                </a>
+              
+              {/* Links */}
+              <div className="flex gap-4 pt-4 border-t border-border">
+                {project.github && (
+                  <a
+                    href={project.github}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Github size={16} />
+                    Code
+                  </a>
+                )}
                 {project.demo && (
                   <a
                     href={project.demo}
                     className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
                   >
                     <ExternalLink size={16} />
-                    Demo
+                    Live Demo
                   </a>
+                )}
+                {!project.github && !project.demo && (
+                  <span className="text-sm text-muted-foreground/50 italic">
+                    Coming soon
+                  </span>
                 )}
               </div>
             </div>

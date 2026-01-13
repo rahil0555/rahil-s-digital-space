@@ -1,50 +1,72 @@
-import { Zap, Rocket, Target } from "lucide-react";
+import { Zap, Bot, Layers } from "lucide-react";
 
 const philosophies = [
   {
     icon: Zap,
-    title: "Learn by Building",
+    title: "Build Fast, Learn Faster",
     description:
-      "Theory is important, but nothing beats getting your hands dirty. Every project teaches something new, and every failure is a lesson in disguise.",
+      "Speed is a feature. I ship MVPs in days, not months. Every launch is a learning opportunity, and every failure teaches something textbooks can't.",
+    quote: "\"Done is better than perfect—but shipped is better than both.\"",
   },
   {
-    icon: Rocket,
-    title: "Ship Fast",
+    icon: Bot,
+    title: "AI Should Replace Friction, Not Humans",
     description:
-      "Perfect is the enemy of done. I believe in iterating quickly, getting feedback early, and improving continuously. A working prototype beats a perfect plan.",
+      "AI isn't about replacing people—it's about removing the tedious parts so humans can focus on what matters. I build AI that augments, not replaces.",
+    quote: "\"Technology should feel like magic, not homework.\"",
   },
   {
-    icon: Target,
-    title: "Solve Real Problems",
+    icon: Layers,
+    title: "Simple Systems Scale Better",
     description:
-      "Technology for its own sake is pointless. I focus on building things that people actually need—solutions that make a tangible difference in the real world.",
+      "Complexity is the enemy of execution. I design systems that are easy to understand, maintain, and scale. The best architecture is the one you don't notice.",
+    quote: "\"If you can't explain it simply, you don't understand it well enough.\"",
   },
 ];
 
 const Philosophy = () => {
   return (
-    <section id="philosophy" className="py-24 px-6 bg-secondary/30">
-      <div className="container mx-auto max-w-4xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          My <span className="text-gradient">Philosophy</span>
-        </h2>
-        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
-          The principles that guide how I approach building and problem-solving.
-        </p>
+    <section id="philosophy" className="relative py-24 px-6 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/20 to-transparent" />
+      
+      <div className="container mx-auto max-w-4xl relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+            My <span className="text-gradient">Philosophy</span>
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            The principles that guide how I build products and solve problems.
+          </p>
+        </div>
+        
         <div className="space-y-8">
           {philosophies.map((item, index) => (
             <div
               key={item.title}
-              className="flex gap-6 items-start"
+              className="group card-gradient border border-border rounded-2xl p-8 hover-lift"
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
-              <div className="flex-shrink-0 w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <item.icon size={24} className="text-primary-foreground" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Icon */}
+                <div className="flex-shrink-0">
+                  <div className="w-14 h-14 bg-gradient-primary rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <item.icon size={28} className="text-primary-foreground" />
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-gradient transition-all">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    {item.description}
+                  </p>
+                  <p className="text-sm text-primary italic">
+                    {item.quote}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
