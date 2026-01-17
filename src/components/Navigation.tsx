@@ -58,7 +58,7 @@ const Navigation = () => {
             download
             className="hidden sm:flex items-center gap-2 bg-gradient-primary text-primary-foreground px-5 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-all shadow-glow-sm"
           >
-            <Download size={16} />
+           
           
           </a>
           
